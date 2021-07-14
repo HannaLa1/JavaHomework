@@ -33,7 +33,7 @@ public class Unit3Task13 {
                 count++;
             }
         }
-        middle = 1. * sum / count;
+        middle = (double) sum / count;
 
         System.out.println("\nСреднее арифметическое элементов массива, превосходящих некоторое число --> " + middle);
     }

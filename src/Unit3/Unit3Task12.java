@@ -30,7 +30,7 @@ public class Unit3Task12 {
                 sum += arr[i];
             }
         }
-        middle = 1. * sum / (size / 2);
+        middle = (double) sum / (size / 2);
 
         System.out.println("\nСреднее арифметическое элементов с нечетными номерами --> " + middle);
     }

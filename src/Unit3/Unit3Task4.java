@@ -18,8 +18,6 @@ public class Unit3Task4 {
 
         for (int i = 0; i < 20; i++)
         {
-            arr[i] = (int)(Math.random() * 21);
-
             if (i % 2 != 0)
             {
                 arr[i] = 0;
