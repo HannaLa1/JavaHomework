@@ -41,8 +41,8 @@ public class Computer {
                     {
                         limitResources();
                         System.out.println("The computer turned on!");
-                        this.workCycles--;
-                        System.out.println("The remaining number of complete work cycles --> " + this.workCycles);
+                        workCycles--;
+                        System.out.println("The remaining number of complete work cycles --> " + workCycles);
                     }
                     else
                     {
@@ -81,8 +81,8 @@ public class Computer {
                     {
                         limitResources();
                         System.out.println("The computer turned off!");
-                        this.workCycles--;
-                        System.out.println("The remaining number of complete work cycles --> " + this.workCycles);
+                        workCycles--;
+                        System.out.println("The remaining number of complete work cycles --> " + workCycles);
                     }
                     else
                     {
@@ -101,7 +101,7 @@ public class Computer {
 
     void limitResources()
     {
-        if (this.workCycles == 0)
+        if (workCycles == 0)
         {
             System.out.println("The computer's resource limit has been exceeded!");
             System.exit(0);
