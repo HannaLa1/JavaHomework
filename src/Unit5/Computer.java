@@ -1,5 +1,5 @@
 package Unit5;
-
+import java.util.Random;
 import java.util.Scanner;
 
 public class Computer {
@@ -19,8 +19,9 @@ public class Computer {
         this.workCycles = workCycles;
     }
 
-    void on(int random)
+    boolean on()
     {
+        Random rand = new Random();
         Scanner in = new Scanner(System.in);
         int num = 0;
 
@@ -37,17 +38,17 @@ public class Computer {
                 }
                 else
                 {
-                    if (num == random)
+                    if (num == rand.nextInt(2))
                     {
-                        limitResources();
                         System.out.println("The computer turned on!");
                         workCycles--;
                         System.out.println("The remaining number of complete work cycles --> " + workCycles);
                     }
                     else
                     {
+                        limitResources();
                         System.out.println("The computer crashed!");
-                        System.exit(0);
+                        return false;
                     }
                 }
             }
@@ -57,10 +58,12 @@ public class Computer {
                 System.out.println("Введите число [0..1]!");
             }
         }while(num < 0 || num > 1);
+        return true;
     }
 
-    void off(int random)
+    boolean off()
     {
+        Random rand = new Random();
         Scanner in = new Scanner(System.in);
         int num = 0;
 
@@ -77,17 +80,17 @@ public class Computer {
                 }
                 else
                 {
-                    if (num == random)
+                    if (num == rand.nextInt(2))
                     {
-                        limitResources();
                         System.out.println("The computer turned off!");
                         workCycles--;
                         System.out.println("The remaining number of complete work cycles --> " + workCycles);
                     }
                     else
                     {
+                        limitResources();
                         System.out.println("The computer crashed!");
-                        System.exit(0);
+                        return false;
                     }
                 }
             }
@@ -97,6 +100,7 @@ public class Computer {
                 System.out.println("Введите число [0..1]!");
             }
         }while(num < 0 || num > 1);
+        return true;
     }
 
     void limitResources()
@@ -104,7 +108,6 @@ public class Computer {
         if (workCycles == 0)
         {
             System.out.println("The computer's resource limit has been exceeded!");
-            System.exit(0);
         }
     }
 
