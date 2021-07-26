@@ -1,5 +1,4 @@
 package part3;
-import java.util.Random;
 import java.util.Scanner;
 
 public class ex2 {
