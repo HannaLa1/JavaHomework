@@ -1,4 +1,4 @@
-package part7.ex2;
+package Classwork7;
 
 public class Trousers extends Clothes implements MenClothes, WomanClothes{
 

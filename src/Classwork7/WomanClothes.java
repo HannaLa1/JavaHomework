@@ -1,4 +1,4 @@
-package part7.ex2;
+package Classwork7;
 
 public interface WomanClothes {
     default String clotheWoman()
