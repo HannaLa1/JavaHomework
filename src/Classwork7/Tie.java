@@ -1,4 +1,4 @@
-package part7.ex2;
+package Classwork7;
 
 public class Tie extends Clothes implements MenClothes{
 
