@@ -2,28 +2,24 @@ package Unit9.Task4;
 
 public class TextFormater {
     public static int numberOfWords(String str) {
-        int count = 1;
-
-        for (int i = 0; i < str.length() - 1; i++) {
-            if((str.charAt(i) == ' ') && (str.charAt(i + 1) != ' ')){
-                count++;
-            }
-        }
-        return count;
+        return str.split(" ").length;
     }
 
     public static boolean isPalindrome(String str) {
+        String[] arr = str.replaceAll("[^a-zA-Z ]", "").toLowerCase().split("\\s+");
         boolean flag = false;
 
-        for (int i = 0; i < str.length() / 2; i++) {
-            if (str.charAt(i) == str.charAt(str.length() - i - 1)) {
+        for (String s : arr) {
+            StringBuilder stringBuilder = new StringBuilder(s);
+
+            if (stringBuilder.reverse().toString().equals(s)) {
                 flag = true;
             }
-        }
 
-        if (flag){
-            return true;
+            if(flag){
+                break;
+            }
         }
-        return false;
+        return flag;
     }
 }
