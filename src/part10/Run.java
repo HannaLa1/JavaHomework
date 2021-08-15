@@ -38,7 +38,7 @@ public class Run {
             }
         }
 
-        shop.editProduct(product1);
+        shop.editProduct(product4);
         for (Product value : shop.getAllProducts()) {
             if(value != null){
                 System.out.println(value);

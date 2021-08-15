@@ -3,24 +3,22 @@ package part10;
 import java.util.Arrays;
 
 public class Shop {
-    private final double LOAD = 0.5;
     private Product[] arr = new Product[10];
     private int index = 0;
 
     public void addProduct(Product product) {
         boolean flag = true;
 
-        if (arr == null) {
-            arr[index++] = product;
-        }
-
-        if (index >= arr.length * LOAD) {
+        if (index >= arr.length) {
             arr = Arrays.copyOf(arr, arr.length + 10);
         }
 
         for (int i = 0; i < index; i++) {
-            if (arr[i].getId() == product.getId()) {
-                flag = false;
+            if (arr[i] != null) {
+                if (arr[i].getId() == product.getId()) {
+                    flag = false;
+                    break;
+                }
             }
         }
 
@@ -36,7 +34,6 @@ public class Shop {
 
     public void deleteProduct(int id) {
         System.out.println("\nDelete product with id = " + id + ":");
-        System.out.println("Sort by order of addition(last added at the beginning) -->");
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] != null) {
                 if (arr[i].getId() == id) {
@@ -49,7 +46,7 @@ public class Shop {
     public void sortPrice() {
         System.out.println("\nSorted by price -->");
         for (int i = arr.length - 1; i >= 0; i--) {
-            if(arr[i] != null){
+            if (arr[i] != null) {
                 for (int j = 0; j < i; j++) {
                     if (arr[j].getPrice() > arr[j + 1].getPrice()) {
                         Product value = arr[j];
@@ -62,8 +59,9 @@ public class Shop {
     }
 
     public void sortByOrder() {
+        System.out.println("Sort by order of addition(last added at the beginning) -->");
         for (int i = arr.length - 1; i >= 0; i--) {
-            if(arr[i] != null){
+            if (arr[i] != null) {
                 for (int j = 0; j < i; j++) {
                     if (arr[j].getOrder() < arr[j + 1].getOrder()) {
                         Product value = arr[j];
@@ -75,10 +73,15 @@ public class Shop {
         }
     }
 
-    public void editProduct(Product product){
+    public void editProduct(Product product) {
         System.out.println("\nEdit one product -->");
-        product.setId(100);
-        product.setName("Pineapple");
-        product.setPrice(13);
+        for (Product value : arr) {
+            if (value != null) {
+                if (value.getId() == product.getId()) {
+                    value.setName(product.getName());
+                    value.setPrice(product.getPrice());
+                }
+            }
+        }
     }
 }
