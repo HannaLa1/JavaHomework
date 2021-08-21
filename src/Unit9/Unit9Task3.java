@@ -1,5 +1,4 @@
 package Unit9;
-
 import java.io.*;
 
 public class Unit9Task3 {
@@ -27,7 +26,6 @@ public class Unit9Task3 {
         }
         return sb.toString();
     }
-
 
     public static void writeStringToFile(String fileName, String str) throws IOException {
         FileWriter writer = new FileWriter(fileName);
