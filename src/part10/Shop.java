@@ -33,11 +33,17 @@ public class Shop {
     }
 
     public void deleteProduct(int id) {
+        int size = arr.length;
+
         System.out.println("\nDelete product with id = " + id + ":");
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 0; i < size; i++) {
             if (arr[i] != null) {
                 if (arr[i].getId() == id) {
-                    arr[i] = null;
+                    for (int j = i + 1; j < size; j++){
+                        arr[j - 1] = arr[j];
+                    }
+                    size--;
+                    i--;
                 }
             }
         }
