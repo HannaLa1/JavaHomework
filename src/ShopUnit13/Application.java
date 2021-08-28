@@ -27,21 +27,18 @@ public class Application {
                             cleanConsole();
                             shop.sortPriceIncreasing();
                             outputProducts();
-                            input.nextLine();
                             pause();
                         }
                         case 2 -> {
                             cleanConsole();
                             shop.sortPriceDecreasing();
                             outputProducts();
-                            input.nextLine();
                             pause();
                         }
                         case 3 -> {
                             cleanConsole();
                             shop.sortByOrder();
                             outputProducts();
-                            input.nextLine();
                             pause();
                         }
                         case 0 -> {
