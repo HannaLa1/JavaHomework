@@ -17,8 +17,8 @@ public class Shop {
         }
 
         if (flag) {
+            product.setOrder(products.size());
             products.add(product);
-            product.setOrder(products.size() - 1);
         }
     }
 
