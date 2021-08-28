@@ -9,99 +9,37 @@ public class Application {
     public void start() throws IOException {
         int key = 0;
         do {
-            for (int i = 0; i < 30; i++){
-                System.out.println();
-            }
-            System.out.println("\n\t\t\t\t\t\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("\t\t\t\t\t\t|_____________________М А Г А З И Н____________________|");
-            System.out.println("\t\t\t\t\t\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("\t\t\t\t\t\t________________________________________________________");
-            System.out.println("\t\t\t\t\t\t|>>>>>>>>>>>>>>>>>>>|КОРЗИНА ТОВАРОВ|<<<<<<<<<<<<<<<<<<|");
-            System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
-
-            System.out.println("\t\t\t\t\t\t|====================|Главное меню|====================|");
-            System.out.println("\t\t\t\t\t\t|______________________________________________________|");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|1 >>> Вывод всех товаров                              |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|2 >>> Добавление товара                               |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|3 >>> Удаление товара                                 |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|4 >>> Редактирование товара                           |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|0 >>> Выход                                           |");
-            System.out.println("\t\t\t\t\t\t|                                                      |");
-            System.out.println("\t\t\t\t\t\t|                   _____________________________      |");
-            System.out.println("\t\t\t\t\t\t|                   |Выберите действие...  <0-4>|      |");
-            System.out.println("\t\t\t\t\t\t|                   |                           |      |");
-            System.out.println("\t\t\t\t\t\t|___________________|                           |______|");
-            System.out.println("\t\t\t\t\t\t.....................>>> ");
-
+            cleanConsole();
+            mainMenu();
 
             key = expInputKey(0, 4);
             switch (key) {
                 case 1 -> {
-                    for (int i = 0; i < 30; i++) {
-                        System.out.println();
-                    }
-                    System.out.println("\n\n\t\t\t\t\t\t             ||||||||||||||||||||||||||||||||           ");
-                    System.out.println("\t\t\t\t\t\t                    Сортировка товаров                  ");
-                    System.out.println("\t\t\t\t\t\t             ||||||||||||||||||||||||||||||||           ");
-                    System.out.println("\t\t\t\t\t\t________________________________________________________");
-                    System.out.println("\t\t\t\t\t\t|                                                      |");
-                    System.out.println("\t\t\t\t\t\t|1 >>> по цене(возрастание)                            |");
-                    System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
-                    System.out.println("\t\t\t\t\t\t|                                                      |");
-                    System.out.println("\t\t\t\t\t\t|2 >>> по цене(убывание)                               |");
-                    System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
-                    System.out.println("\t\t\t\t\t\t|                                                      |");
-                    System.out.println("\t\t\t\t\t\t|3 >>> по добавлению(сначала новые, потом более старые)|");
-                    System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
-                    System.out.println("\t\t\t\t\t\t|                                                      |");
-                    System.out.println("\t\t\t\t\t\t|0 >>> *Назад*                                         |");
-                    System.out.println("\t\t\t\t\t\t|                                                      |");
-                    System.out.println("\t\t\t\t\t\t|         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  |");
-                    System.out.println("\t\t\t\t\t\t|         :Выберите соответствующий параметр.. <0-3>:  |");
-                    System.out.println("\t\t\t\t\t\t|         :                                         :  |");
-                    System.out.println("\t\t\t\t\t\t|_________:                                         :__|");
-                    System.out.println("\t\t\t\t\t\t.............>>> ");
+                    cleanConsole();
+                    addProductSubmenu();
 
                     int key1 = expInputKey(0, 3);
                     switch (key1) {
                         case 1 -> {
-                            for (int i = 0; i < 30; i++) {
-                                System.out.println();
-                            }
+                            cleanConsole();
                             shop.sortPriceIncreasing();
-                            for (Product value : shop.getAllProducts()) {
-                                System.out.println(value);
-                            }
+                            outputProducts();
                             input.nextLine();
                             System.out.println("Press ENTER to continue...");
                             System.in.read();
                         }
                         case 2 -> {
-                            for (int i = 0; i < 30; i++) {
-                                System.out.println();
-                            }
+                            cleanConsole();
                             shop.sortPriceDecreasing();
-                            for (Product value : shop.getAllProducts()) {
-                                System.out.println(value);
-                            }
+                            outputProducts();
                             input.nextLine();
                             System.out.println("Press ENTER to continue...");
                             System.in.read();
                         }
                         case 3 -> {
-                            for (int i = 0; i < 30; i++) {
-                                System.out.println();
-                            }
+                            cleanConsole();
                             shop.sortByOrder();
-                            for (Product value : shop.getAllProducts()) {
-                                System.out.println(value);
-                            }
+                            outputProducts();
                             input.nextLine();
                             System.out.println("Press ENTER to continue...");
                             System.in.read();
@@ -111,19 +49,13 @@ public class Application {
                     }
                 }
                 case 2 -> {
-                    for (int i = 0; i < 30; i++) {
-                        System.out.println();
-                    }
-
+                    cleanConsole();
                     shop.addProduct(inputData());
                     System.out.println("Press ENTER to continue...");
                     System.in.read();
                 }
                 case 3 -> {
-                    for (int i = 0; i < 30; i++) {
-                        System.out.println();
-                    }
-
+                    cleanConsole();
                     System.out.println("Введите id товара >>> ");
                     int id = expInput();
                     shop.deleteProduct(id);
@@ -131,10 +63,7 @@ public class Application {
                     System.in.read();
                 }
                 case 4 -> {
-                    for (int i = 0; i < 30; i++) {
-                        System.out.println();
-                    }
-
+                    cleanConsole();
                     System.out.println("Данные товара для редактирования:");
                     shop.editProduct(inputData());
                     System.out.println("Press ENTER to continue...");
@@ -232,5 +161,70 @@ public class Application {
         int price = expInput();
 
         return new Product(id, name, price);
+    }
+
+    public void cleanConsole(){
+        for (int i = 0; i < 30; i++) {
+            System.out.println();
+        }
+    }
+
+    public void outputProducts(){
+        for (Product value : shop.getAllProducts()) {
+            System.out.println(value);
+        }
+    }
+
+    public void mainMenu(){
+        System.out.println("\n\t\t\t\t\t\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println("\t\t\t\t\t\t|_____________________М А Г А З И Н____________________|");
+        System.out.println("\t\t\t\t\t\t%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println("\t\t\t\t\t\t________________________________________________________");
+        System.out.println("\t\t\t\t\t\t|>>>>>>>>>>>>>>>>>>>|КОРЗИНА ТОВАРОВ|<<<<<<<<<<<<<<<<<<|");
+        System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+
+        System.out.println("\t\t\t\t\t\t|====================|Главное меню|====================|");
+        System.out.println("\t\t\t\t\t\t|______________________________________________________|");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|1 >>> Вывод всех товаров                              |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|2 >>> Добавление товара                               |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|3 >>> Удаление товара                                 |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|4 >>> Редактирование товара                           |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|0 >>> Выход                                           |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|                   _____________________________      |");
+        System.out.println("\t\t\t\t\t\t|                   |Выберите действие...  <0-4>|      |");
+        System.out.println("\t\t\t\t\t\t|                   |                           |      |");
+        System.out.println("\t\t\t\t\t\t|___________________|                           |______|");
+        System.out.println("\t\t\t\t\t\t.....................>>> ");
+    }
+
+    public void addProductSubmenu(){
+        System.out.println("\n\n\t\t\t\t\t\t             ||||||||||||||||||||||||||||||||           ");
+        System.out.println("\t\t\t\t\t\t                    Сортировка товаров                  ");
+        System.out.println("\t\t\t\t\t\t             ||||||||||||||||||||||||||||||||           ");
+        System.out.println("\t\t\t\t\t\t________________________________________________________");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|1 >>> по цене(возрастание)                            |");
+        System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|2 >>> по цене(убывание)                               |");
+        System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|3 >>> по добавлению(сначала новые, потом более старые)|");
+        System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|0 >>> *Назад*                                         |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  |");
+        System.out.println("\t\t\t\t\t\t|         :Выберите соответствующий параметр.. <0-3>:  |");
+        System.out.println("\t\t\t\t\t\t|         :                                         :  |");
+        System.out.println("\t\t\t\t\t\t|_________:                                         :__|");
+        System.out.println("\t\t\t\t\t\t.............>>> ");
     }
 }

@@ -28,15 +28,13 @@ public class Shop {
 
     public void deleteProduct(int id) {
         boolean flag = false;
-        int index = 0;
         int indexId = 0;
 
-        for (Product item : products) {
-            if (item.getId() == id) {
-                indexId = index;
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getId() == id) {
+                indexId = i;
                 flag = true;
             }
-            index++;
         }
 
         if (flag){
