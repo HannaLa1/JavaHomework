@@ -10,14 +10,11 @@ public class Unit11Task4 {
         Car[] arr = {new Car(Brand.BMW, 250, 30000), new Car(Brand.NISSAN, 265, 15000),
                 new Car(Brand.TESLA, 300, 120000)};
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/Unit11/Task4/car.dat"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/Unit11/Task4/car.dat"));
+             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/Unit11/Task4/car.dat"))) {
             oos.writeObject(arr);
-
-            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/Unit11/Task4/car.dat"))) {
-                Car[] cars = (Car[])ois.readObject();
-                System.out.println(Arrays.toString(cars));
-            }
-
+            Car[] cars = (Car[]) ois.readObject();
+            System.out.println(Arrays.toString(cars));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
