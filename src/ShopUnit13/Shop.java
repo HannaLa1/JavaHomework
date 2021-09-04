@@ -2,19 +2,14 @@ package ShopUnit13;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class Shop {
     private final List<Product> products = new ArrayList<>();
 
     public void addProduct(Product product) {
-        boolean flag = true;
-
-        for (Product item : products) {
-            if (item.getId() == product.getId()) {
-                flag = false;
-                break;
-            }
-        }
+        boolean flag = products.stream()
+                .noneMatch(item -> item.getId() == product.getId());
 
         if (flag) {
             products.add(product);
@@ -44,6 +39,12 @@ public class Shop {
         }
     }
 
+    public void filterByPrice(int from, int to){
+        products.stream()
+                .filter(p-> ((p.getPrice() > from) && (p.getPrice() < to)))
+                .forEach(System.out::println);
+    }
+
     public void sortPriceDecreasing() {
         products.sort(Comparator.comparing(Product::getPrice).reversed());
     }
@@ -57,17 +58,18 @@ public class Shop {
     }
 
     public void editProduct(Product product) {
-        boolean flag = false;
 
-        for (Product item : products) {
-            if (item.getId() == product.getId()) {
-                item.setName(product.getName());
-                item.setPrice(product.getPrice());
-                flag = true;
-            }
-        }
+        boolean flag = products.stream()
+                .noneMatch(item -> item.getId() == product.getId());
 
-        if (!flag){
+        if (!flag) {
+            products.stream()
+                    .filter(x -> x.getId() == product.getId())
+                    .forEach(p -> {
+                        p.setName(product.getName());
+                        p.setPrice(product.getPrice());
+                    });
+        } else {
             System.out.println("*Нет товара с таким id!*");
         }
     }

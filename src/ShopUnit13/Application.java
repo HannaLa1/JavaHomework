@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Application {
     private final Shop shop = new Shop();
-    private final Scanner input = new Scanner(System.in);
+    private  Scanner input = new Scanner(System.in);
 
     public void start() throws IOException {
         int key;
@@ -21,7 +21,7 @@ public class Application {
                     cleanConsole();
                     addProductSubmenu();
 
-                    int key1 = expInputKey(0, 3);
+                    int key1 = expInputKey(0, 4);
                     switch (key1) {
                         case 1 -> {
                             cleanConsole();
@@ -39,6 +39,11 @@ public class Application {
                             cleanConsole();
                             shop.sortByOrder();
                             outputProducts();
+                            pause();
+                        }
+                        case 4 -> {
+                            cleanConsole();
+                            inputFilter();
                             pause();
                         }
                         case 0 -> {
@@ -70,11 +75,13 @@ public class Application {
         }while (key != 0);
     }
 
-    public int expInputKey(int from, int to){
+    public int expInputKey(int from, int to) {
         int value = 0;
+        boolean flag;
 
         do
         {
+            flag=true;
             if (input.hasNextInt())
             {
                 value = input.nextInt();
@@ -86,19 +93,22 @@ public class Application {
             }
             else
             {
+                flag=false;
                 input.next();
                 System.out.println("Введите положительное целое число!");
             }
-        }while(value < from || value > to);
+        }while(!flag || value < from || value > to);
 
         return value;
     }
 
     public int expInput(){
         int value = 0;
+        boolean flag;
 
         do
         {
+            flag = true;
             if (input.hasNextInt())
             {
                 value = input.nextInt();
@@ -110,10 +120,11 @@ public class Application {
             }
             else
             {
+                flag = false;
                 input.next();
                 System.out.println("Введите положительное целое число!");
             }
-        }while(value <= 0);
+        }while(!flag || value <= 0);
 
         return value;
     }
@@ -124,7 +135,7 @@ public class Application {
 
         do
         {
-            str = input.nextLine();
+            str = input.next();
             char[] chars = str.toCharArray();
 
             for (char aChar : chars) {
@@ -145,10 +156,18 @@ public class Application {
         return str;
     }
 
+    public void inputFilter(){
+        System.out.println(">>>Введите диапазон цен -->\n");
+        System.out.println("*Введите нижнюю границу: ");
+        int limit1 = expInput();
+        System.out.println("*Введите верхнюю границу: ");
+        int limit2 = expInput();
+        shop.filterByPrice(limit1, limit2);
+    }
+
     public Product inputData(){
         System.out.println("Введите id товара >>> ");
         int id = expInput();
-        input.nextLine();
         System.out.println("Введите название товара >>> ");
         String name = expInputString();
         System.out.println("Введите цену товара >>> ");
@@ -158,11 +177,11 @@ public class Application {
     }
 
     public void cleanConsole(){
-        repeat(30, () -> System.out.println());
+        repeat(30, System.out::println);
     }
 
     public void outputProducts(){
-        shop.getAllProducts().forEach(value -> System.out.println(value));
+        shop.getAllProducts().forEach(System.out::println);
     }
 
     public void mainMenu(){
@@ -209,10 +228,13 @@ public class Application {
         System.out.println("\t\t\t\t\t\t|3 >>> по добавлению(сначала новые, потом более старые)|");
         System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
         System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|4 >>> фильтр по цене                                  |");
+        System.out.println("\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|0 >>> *Назад*                                         |");
         System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  |");
-        System.out.println("\t\t\t\t\t\t|         :Выберите соответствующий параметр.. <0-3>:  |");
+        System.out.println("\t\t\t\t\t\t|         :Выберите соответствующий параметр.. <0-4>:  |");
         System.out.println("\t\t\t\t\t\t|         :                                         :  |");
         System.out.println("\t\t\t\t\t\t|_________:                                         :__|");
         System.out.println("\t\t\t\t\t\t.............>>> ");
