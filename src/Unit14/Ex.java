@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class Ex {
     public static void main(String[] args) {
         List<String> words = List.of("asdferwf", "sdferf", "sdffds", "sdfjkdsf",
-                "asdfgfdsa", "srtydytrs", "tttdttt", "mawdasdqwdam", "asdsflsgh");
+                "asdfgfdsa", "srtydytrs", "tttdttt", "mawdasdqwdam", "asdsflsgh", "yaf");
 
         List<String> palindrome = words.stream()
                 .filter(x -> new StringBuilder(x).reverse().toString().equals(x))
