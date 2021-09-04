@@ -1,5 +1,4 @@
 package ShopUnit13;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Product {
@@ -15,6 +14,15 @@ public class Product {
         this.price = price;
         this.localDate = localDate;
         this.localTime = localTime;
+    }
+
+    public Product(String str) {
+        String[] parts = str.split("\t");
+        this.id = Integer.parseInt(parts[0]);
+        this.name = parts[1];
+        this.price = Integer.parseInt(parts[2]);
+        this.localDate = parts[3];
+        this.localTime = LocalTime.parse(parts[4]);
     }
 
     public int getId() {
@@ -58,13 +66,19 @@ public class Product {
         this.localTime = localTime;
     }
 
-    @Override
+    public void printProduct(){
+        System.out.println("Информация о товаре:");
+        System.out.println(">>> Id --> " + id);
+        System.out.println(">>> Название --> " + name);
+        System.out.println(">>> Цена --> " + price);
+        System.out.println(">>> Дата добавления --> " + localDate + " | " + localTime);
+        System.out.println("---------------------------------------------------------");
+    }
+
     public String toString() {
-        return  "Информация о товаре:" +
-                "\n>>> Id --> " + id +
-                "\n>>> Название --> " + name +
-                "\n>>> Цена --> " + price +
-                "\n>>> Дата добавления --> " + localDate + " | " + localTime +
-                "\n---------------------------------------------------------";
+        return  id + "\t" +
+                name + "\t" +
+                price + "\t" +
+                localDate + "\t" + localTime;
     }
 }
