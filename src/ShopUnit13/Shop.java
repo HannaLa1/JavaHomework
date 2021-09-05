@@ -114,7 +114,9 @@ public class Shop {
                 String[] arr = str.split("\n");
 
                 for (String s : arr){
-                    products.add(new Product(s));
+                    if (!s.equals("")){
+                        products.add(new Product(s));
+                    }
                 }
             }
         }catch (IOException ex){

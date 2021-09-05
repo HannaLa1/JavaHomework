@@ -16,8 +16,17 @@ public class Product {
         this.localTime = localTime;
     }
 
+    public Product() {
+        this.id = 0;
+        this.name = null;
+        this.price = 0;
+        this.localDate = null;
+        this.localTime = null;
+    }
+
     public Product(String str) {
         String[] parts = str.split("\t");
+
         this.id = Integer.parseInt(parts[0]);
         this.name = parts[1];
         this.price = Integer.parseInt(parts[2]);
