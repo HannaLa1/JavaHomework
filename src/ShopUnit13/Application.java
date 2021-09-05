@@ -7,9 +7,12 @@ import java.util.Scanner;
 
 public class Application {
     private final Shop shop = new Shop();
-    private  Scanner input = new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
+    private String FILE_NAME_IO = "src/ShopUnit13/result.txt";
 
     public void start() throws IOException {
+        shop.parseFile(FILE_NAME_IO);
+
         int key;
         do {
             cleanConsole();
@@ -26,19 +29,19 @@ public class Application {
                         case 1 -> {
                             cleanConsole();
                             shop.sortPriceIncreasing();
-                            outputProducts();
+                            typeOfDataOutput();
                             pause();
                         }
                         case 2 -> {
                             cleanConsole();
                             shop.sortPriceDecreasing();
-                            outputProducts();
+                            typeOfDataOutput();
                             pause();
                         }
                         case 3 -> {
                             cleanConsole();
                             shop.sortByOrder();
-                            outputProducts();
+                            typeOfDataOutput();
                             pause();
                         }
                         case 4 -> {
@@ -157,12 +160,31 @@ public class Application {
     }
 
     public void inputFilter(){
-        System.out.println(">>>Введите диапазон цен -->\n");
-        System.out.println("*Введите нижнюю границу: ");
-        int limit1 = expInput();
-        System.out.println("*Введите верхнюю границу: ");
-        int limit2 = expInput();
-        shop.filterByPrice(limit1, limit2);
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Вывести информацию в консоль / в файл (1/0)?");
+        System.out.println("--------------------------------------------");
+
+        int key2 = expInputKey(0, 1);
+        cleanConsole();
+        switch (key2){
+            case 0 ->{
+                System.out.println(">>>Введите диапазон цен -->\n");
+                System.out.println("*Введите нижнюю границу: ");
+                int limit1 = expInput();
+                System.out.println("*Введите верхнюю границу: ");
+                int limit2 = expInput();
+                shop.filterByPriceWriteToFile(limit1, limit2);
+                System.out.println(">>>Информация записана в файл!");
+            }
+            case 1 -> {
+                System.out.println(">>>Введите диапазон цен -->\n");
+                System.out.println("*Введите нижнюю границу: ");
+                int limit1 = expInput();
+                System.out.println("*Введите верхнюю границу: ");
+                int limit2 = expInput();
+                shop.filterByPrice(limit1, limit2);
+            }
+        }
     }
 
     public Product inputData(){
@@ -181,7 +203,7 @@ public class Application {
     }
 
     public void outputProducts(){
-        shop.getAllProducts().forEach(System.out::println);
+        shop.getAllProducts().forEach(Product::printProduct);
     }
 
     public void mainMenu(){
@@ -238,6 +260,22 @@ public class Application {
         System.out.println("\t\t\t\t\t\t|         :                                         :  |");
         System.out.println("\t\t\t\t\t\t|_________:                                         :__|");
         System.out.println("\t\t\t\t\t\t.............>>> ");
+    }
+
+    public void typeOfDataOutput(){
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Вывести информацию в консоль / в файл (1/0)?");
+        System.out.println("--------------------------------------------");
+
+        int key2 = expInputKey(0, 1);
+        cleanConsole();
+        switch (key2){
+            case 0 -> {
+                shop.writeProductToFile(FILE_NAME_IO);
+                System.out.println(">>>Информация записана в файл!");
+            }
+            case 1 -> outputProducts();
+        }
     }
 
     public static void repeat(int n, Runnable r) {
