@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Shop {
     private final List<Product> products = new ArrayList<>();
-    private final String FILE_NAME_OUTPUT = "src/ShopUnit13/result.txt";
+    private final String FILE_NAME_IO = "src/ShopUnit13/result.txt";
 
     public void addProduct(Product product) {
 
@@ -15,7 +16,6 @@ public class Shop {
                 .noneMatch(item -> item.getId() == product.getId());
 
         if (flag) {
-            parseFile(FILE_NAME_OUTPUT);
             products.add(product);
         }
     }
@@ -25,28 +25,22 @@ public class Shop {
     }
 
     public void deleteProduct(int id) {
-        boolean flag = false;
-        int indexId = 0;
-
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getId() == id) {
-                indexId = i;
-                flag = true;
-            }
-        }
-
-        if (flag){
-            System.out.println("\n>>> Удалён продукт с id = " + id + "!");
-            products.remove(indexId);
-        }else {
-            System.out.println("*Нет товара с таким id!*");
-        }
+        products.stream()
+                .filter(i -> i.getId() == id)
+                .findFirst()
+                .ifPresentOrElse(i -> {
+                    System.out.println("\n>>> Удалён продукт с id = " + id + "!");
+                    products.remove(i);
+                },
+                () -> {
+                    System.out.println("*Нет товара с таким id!*");
+                });
     }
 
     public void filterByPrice(int from, int to){
         products.stream()
                 .filter(p-> ((p.getPrice() >= from) && (p.getPrice() <= to)))
-                .forEach(System.out::println);
+                .forEach(Product::printProduct);
     }
 
     public void filterByPriceWriteToFile(int from, int to){
@@ -54,7 +48,7 @@ public class Shop {
                 .filter(p-> ((p.getPrice() >= from) && (p.getPrice() <= to)))
                 .collect(Collectors.toList());
 
-            try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME_OUTPUT))) {
+            try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME_IO))) {
                 list.forEach(s -> {
                     try {
                         bw.write(s + "\n");
@@ -120,7 +114,7 @@ public class Shop {
                 String[] arr = str.split("\n");
 
                 for (String s : arr){
-                    getAllProducts().add(new Product(s));
+                    products.add(new Product(s));
                 }
             }
         }catch (IOException ex){

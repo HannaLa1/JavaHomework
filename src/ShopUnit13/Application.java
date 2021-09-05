@@ -8,9 +8,10 @@ import java.util.Scanner;
 public class Application {
     private final Shop shop = new Shop();
     private Scanner input = new Scanner(System.in);
-    private String FILE_NAME_OUTPUT = "src/ShopUnit13/result.txt";
+    private String FILE_NAME_IO = "src/ShopUnit13/result.txt";
 
     public void start() throws IOException {
+        shop.parseFile(FILE_NAME_IO);
 
         int key;
         do {
@@ -173,6 +174,7 @@ public class Application {
                 System.out.println("*Введите верхнюю границу: ");
                 int limit2 = expInput();
                 shop.filterByPriceWriteToFile(limit1, limit2);
+                System.out.println(">>>Информация записана в файл!");
             }
             case 1 -> {
                 System.out.println(">>>Введите диапазон цен -->\n");
@@ -201,7 +203,7 @@ public class Application {
     }
 
     public void outputProducts(){
-        shop.getAllProducts().forEach(s -> s.printProduct());
+        shop.getAllProducts().forEach(Product::printProduct);
     }
 
     public void mainMenu(){
@@ -268,7 +270,10 @@ public class Application {
         int key2 = expInputKey(0, 1);
         cleanConsole();
         switch (key2){
-            case 0 -> shop.writeProductToFile(FILE_NAME_OUTPUT);
+            case 0 -> {
+                shop.writeProductToFile(FILE_NAME_IO);
+                System.out.println(">>>Информация записана в файл!");
+            }
             case 1 -> outputProducts();
         }
     }
