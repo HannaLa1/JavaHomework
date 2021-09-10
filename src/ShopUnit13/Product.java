@@ -16,14 +16,6 @@ public class Product {
         this.localTime = localTime;
     }
 
-    public Product() {
-        this.id = 0;
-        this.name = null;
-        this.price = 0;
-        this.localDate = null;
-        this.localTime = null;
-    }
-
     public Product(String str) {
         String[] parts = str.split("\t");
 
