@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ShopApplication/ShopApplication.iml" filepath="$PROJECT_DIR$/ShopApplication/ShopApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/TMSJava.iml" filepath="$PROJECT_DIR$/TMSJava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Unit17/Unit17.iml" filepath="$PROJECT_DIR$/Unit17/Unit17.iml" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,5 @@
 package ShopUnit13;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,8 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Shop {
+    private final String baseFile = "ShopApplication/src/main/java/ShopUnit13/jsonResult.json";
     private final List<Product> products = new ArrayList<>();
-    private final String FILE_NAME_IO = "src/ShopUnit13/result.txt";
+    private final String FILE_NAME_IO = "ShopApplication/src/ShopUnit13/result.txt";
 
     public void addProduct(Product product) {
         boolean flag = products.stream()
@@ -123,5 +125,11 @@ public class Shop {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    public void toJavaObject() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Product> productList = Arrays.asList(mapper.readValue(new File(baseFile), Product[].class));
+        products.addAll(productList);
     }
 }

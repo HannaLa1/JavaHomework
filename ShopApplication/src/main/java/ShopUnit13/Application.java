@@ -1,5 +1,4 @@
 package ShopUnit13;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,10 +9,11 @@ import java.util.regex.Pattern;
 public class Application {
     private final Shop shop = new Shop();
     private Scanner input = new Scanner(System.in);
-    private String FILE_NAME_IO = "src/ShopUnit13/result.txt";
+    private String FILE_NAME_IO = "ShopApplication/src/main/java/ShopUnit13/result.txt";
 
     public void start() throws IOException {
-        shop.parseFile(FILE_NAME_IO);
+        //shop.parseFile(FILE_NAME_IO);
+        shop.toJavaObject();
 
         int key;
         do {
@@ -126,7 +126,7 @@ public class Application {
 
     private String expInputString() {
         String str;
-        String regex = "^[A-ZА-Я]\\s?([^\\d && \\S]\\s?)+(\\d\\s?)*$";
+        String regex = "^[A-ZА-Я]\\s?([^\\d && \\S]\\s?)*(\\d\\s?)*$";
 
         input = new Scanner(System.in);
         boolean flag = false;
@@ -251,7 +251,7 @@ public class Application {
         System.out.println("\t\t\t\t\t\t.............>>> ");
     }
 
-    private void typeOfDataOutput() {
+    private void typeOfDataOutput() throws IOException {
         System.out.println("\n--------------------------------------------");
         System.out.println("Вывести информацию в консоль / в файл (1/0)?");
         System.out.println("--------------------------------------------");
@@ -260,7 +260,8 @@ public class Application {
         cleanConsole();
         switch (key2) {
             case 0 -> {
-                shop.writeProductToFile(FILE_NAME_IO);
+                //shop.writeProductToFile(FILE_NAME_IO);
+                ConverterToJSON.toJSON(shop.getAllProducts());
                 System.out.println(">>>Информация записана в файл!");
             }
             case 1 -> outputProducts();
