@@ -12,8 +12,8 @@ public class Application {
     private String FILE_NAME_IO = "ShopApplication/src/main/java/ShopUnit13/result.txt";
 
     public void start() throws IOException {
-        //shop.parseFile(FILE_NAME_IO);
-        shop.toJavaObject();
+        cleanConsole();
+        readDataFromFile();
 
         int key;
         do {
@@ -251,20 +251,36 @@ public class Application {
         System.out.println("\t\t\t\t\t\t.............>>> ");
     }
 
-    private void typeOfDataOutput() throws IOException {
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Вывести информацию в консоль / в файл (1/0)?");
-        System.out.println("--------------------------------------------");
+    private void readDataFromFile() throws IOException {
+        System.out.println("\n------------------------------------------------------------");
+        System.out.println("Прочитать данные о товаре [из файла / из json файла]  (1/0)?");
+        System.out.println("------------------------------------------------------------");
 
         int key2 = expInputKey(0, 1);
         cleanConsole();
         switch (key2) {
+            case 0 -> shop.toJavaObject();
+            case 1 -> shop.parseFile(FILE_NAME_IO);
+        }
+    }
+
+    private void typeOfDataOutput() throws IOException {
+        System.out.println("\n---------------------------------------------------------------");
+        System.out.println("Вывести информацию [в консоль / в файл / в json файл]  (2/1/0)?");
+        System.out.println("---------------------------------------------------------------");
+
+        int key2 = expInputKey(0, 2);
+        cleanConsole();
+        switch (key2) {
             case 0 -> {
-                //shop.writeProductToFile(FILE_NAME_IO);
                 ConverterToJSON.toJSON(shop.getAllProducts());
+                System.out.println(">>>Информация записана в json файл!");
+            }
+            case 1 -> {
+                shop.writeProductToFile(FILE_NAME_IO);
                 System.out.println(">>>Информация записана в файл!");
             }
-            case 1 -> outputProducts();
+            case 2 -> outputProducts();
         }
     }
 
