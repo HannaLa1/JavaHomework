@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bookSeries>
+    <booksFromTheSameSeries>
+        <book articleNumber="978-5-17-099056-6">
+            <title>The picture of Dorian Gray</title>
+            <yearOfPublication>2019</yearOfPublication>
+        </book>
+        <book articleNumber="978-5-17-105398-7">
+            <title>Arc de Triomphe</title>
+            <yearOfPublication>2017</yearOfPublication>
+        </book>
+        <book articleNumber="978-5-699-81406-0">
+            <title>Programming on Java</title>
+            <yearOfPublication>2020</yearOfPublication>
+        </book>
+    </booksFromTheSameSeries>
+</bookSeries>

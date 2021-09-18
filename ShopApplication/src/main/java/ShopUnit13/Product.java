@@ -1,12 +1,29 @@
 package ShopUnit13;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalTime;
 
 public class Product {
+    @JsonProperty("Id")
     private int id;
+
+    @JsonProperty("Название")
     private String name;
+
+    @JsonProperty("Цена")
     private int price;
+
+    @JsonProperty("Дата добавления")
     private String localDate;
+
+    @JsonProperty("Время")
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = ParseDeserializer.class)
     private LocalTime localTime;
+
+    public Product() {}
 
     public Product(int id, String name, int price, String localDate, LocalTime localTime) {
         this.id = id;
@@ -49,7 +66,6 @@ public class Product {
     public void setPrice(int price) {
         this.price = price;
     }
-
 
     public String getLocalDate() {
         return localDate;
