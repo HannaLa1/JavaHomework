@@ -2,16 +2,15 @@ package ShopUnit13;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Shop {
-    private final String baseFile = "ShopApplication/src/main/java/ShopUnit13/jsonResult.json";
     private final List<Product> products = new ArrayList<>();
-    private final String FILE_NAME_IO = "ShopApplication/src/ShopUnit13/result.txt";
+    private final LinkedList<Product> productListSell = new LinkedList<>();
+    private final String FILE_NAME_IO = "ShopApplication/src/main/java/ShopUnit13/result.txt";
+    private final String baseFile = "ShopApplication/src/main/java/ShopUnit13/jsonResult.json";
+    private final String sellFile = "ShopApplication/src/main/java/ShopUnit13/sellProducts.txt";
 
     public void addProduct(Product product) {
         boolean flag = products.stream()
@@ -19,6 +18,15 @@ public class Shop {
 
         if (flag) {
             products.add(product);
+        }
+    }
+
+    public void addProductForSell(Product product) {
+        boolean flag = productListSell.stream()
+                .noneMatch(item -> item.getId() == product.getId());
+
+        if (flag) {
+            productListSell.add(product);
         }
     }
 
@@ -95,6 +103,21 @@ public class Shop {
         }
     }
 
+    public void writeProductToFileForSell(String fileName) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            productListSell.forEach(s -> {
+                try {
+                    bw.write(s + "\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     public void writeProductToFileForFilter(String fileName, List<Product> list) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             list.forEach(s -> {
@@ -131,5 +154,34 @@ public class Shop {
         ObjectMapper mapper = new ObjectMapper();
         List<Product> productList = Arrays.asList(mapper.readValue(new File(baseFile), Product[].class));
         products.addAll(productList);
+    }
+
+    public synchronized void get() throws InterruptedException {
+        while (productListSell.size() < 1){
+            try {
+                wait();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        productListSell.removeFirst();
+        notify();
+        Thread.sleep(500);
+    }
+
+    public synchronized void put() throws InterruptedException {
+        while (productListSell.size() >= 10){
+            try {
+                wait();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        addProductForSell(new Application().inputData());
+        writeProductToFileForSell(sellFile);
+        notify();
+        Thread.sleep(500);
     }
 }

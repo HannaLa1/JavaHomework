@@ -20,7 +20,7 @@ public class Application {
             cleanConsole();
             mainMenu();
 
-            key = expInputKey(0, 4);
+            key = expInputKey(0, 5);
             switch (key) {
                 case 1 -> {
                     cleanConsole();
@@ -71,6 +71,29 @@ public class Application {
                     cleanConsole();
                     System.out.println("Данные товара для редактирования:");
                     shop.editProduct(inputData());
+                    pause();
+                }
+                case 5 -> {
+                    cleanConsole();
+                    Producer producer = new Producer(shop);
+                    Consumer consumer = new Consumer(shop);
+                    Thread t1 = new Thread(producer);
+                    Thread t2 =  new Thread(consumer);
+                    t1.start();
+                    t2.start();
+
+                    try {
+                        t1.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        t2.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     pause();
                 }
                 case 0 -> {
@@ -176,8 +199,8 @@ public class Application {
         }
     }
 
-    private Product inputData() {
-        System.out.println("Введите id товара >>> ");
+    public Product inputData() {
+        System.out.println("\nВведите id товара >>> ");
         int id = expInput();
         System.out.println("Введите название товара >>> ");
         String name = expInputString();
@@ -215,10 +238,12 @@ public class Application {
         System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|4 >>> Редактирование товара                           |");
         System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|5 >>> Покупка и производство товаров                  |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|0 >>> Выход                                           |");
         System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|                   _____________________________      |");
-        System.out.println("\t\t\t\t\t\t|                   |Выберите действие...  <0-4>|      |");
+        System.out.println("\t\t\t\t\t\t|                   |Выберите действие...  <0-5>|      |");
         System.out.println("\t\t\t\t\t\t|                   |                           |      |");
         System.out.println("\t\t\t\t\t\t|___________________|                           |______|");
         System.out.println("\t\t\t\t\t\t.....................>>> ");
