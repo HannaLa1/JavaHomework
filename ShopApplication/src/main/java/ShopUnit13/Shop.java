@@ -166,6 +166,8 @@ public class Shop {
         }
 
         productListSell.removeFirst();
+        writeProductToFileForSell(sellFile);
+        System.out.println(">>>Товар куплен!");
         notify();
         Thread.sleep(500);
     }
@@ -181,6 +183,7 @@ public class Shop {
 
         addProductForSell(new Application().inputData());
         writeProductToFileForSell(sellFile);
+        System.out.println(">>>Товар добавлен!");
         notify();
         Thread.sleep(500);
     }
