@@ -1,5 +1,7 @@
 package ShopUnit13;
+
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -11,16 +13,16 @@ public class Application {
     private Scanner input = new Scanner(System.in);
     private String FILE_NAME_IO = "ShopApplication/src/main/java/ShopUnit13/result.txt";
 
-    public void start() throws IOException {
+    public void start() throws IOException, SQLException {
         cleanConsole();
-        readDataFromFile();
+        shop.getProductsFromDB();
 
         int key;
         do {
             cleanConsole();
             mainMenu();
 
-            key = expInputKey(0, 5);
+            key = expInputKey(0, 6);
             switch (key) {
                 case 1 -> {
                     cleanConsole();
@@ -78,7 +80,7 @@ public class Application {
                     Producer producer = new Producer(shop);
                     Consumer consumer = new Consumer(shop);
                     Thread t1 = new Thread(producer);
-                    Thread t2 =  new Thread(consumer);
+                    Thread t2 = new Thread(consumer);
                     t1.start();
                     t2.start();
 
@@ -94,6 +96,13 @@ public class Application {
                         e.printStackTrace();
                     }
 
+                    pause();
+                }
+                case 6 -> {
+                    cleanConsole();
+                    System.out.println("Введите id товара для покупки >>> ");
+                    int id = expInput();
+                    shop.buyProduct(id);
                     pause();
                 }
                 case 0 -> {
@@ -171,10 +180,10 @@ public class Application {
         return str;
     }
 
-    private void inputFilter() {
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Вывести информацию в консоль / в файл (1/0)?");
-        System.out.println("--------------------------------------------");
+    private void inputFilter() throws SQLException, IOException {
+        System.out.println("\n---------------------------------------------------------------");
+        System.out.println("Вывести информацию [в консоль / в json файл]  (1/0)?");
+        System.out.println("---------------------------------------------------------------");
 
         int key2 = expInputKey(0, 1);
         cleanConsole();
@@ -185,8 +194,8 @@ public class Application {
                 int limit1 = expInput();
                 System.out.println("*Введите верхнюю границу: ");
                 int limit2 = expInput();
-                shop.filterByPriceWriteToFile(limit1, limit2);
-                System.out.println(">>>Информация записана в файл!");
+                shop.filterByPriceWriteToJsonFile(limit1, limit2);
+                System.out.println(">>>Информация записана в json файл!");
             }
             case 1 -> {
                 System.out.println(">>>Введите диапазон цен -->\n");
@@ -240,6 +249,8 @@ public class Application {
         System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|5 >>> Покупка и производство товаров                  |");
         System.out.println("\t\t\t\t\t\t|                                                      |");
+        System.out.println("\t\t\t\t\t\t|6 >>> Покупка товаров                                 |");
+        System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|0 >>> Выход                                           |");
         System.out.println("\t\t\t\t\t\t|                                                      |");
         System.out.println("\t\t\t\t\t\t|                   _____________________________      |");
@@ -291,21 +302,18 @@ public class Application {
 
     private void typeOfDataOutput() throws IOException {
         System.out.println("\n---------------------------------------------------------------");
-        System.out.println("Вывести информацию [в консоль / в файл / в json файл]  (2/1/0)?");
+        System.out.println("Вывести информацию [в консоль / в json файл]  (1/0)?");
         System.out.println("---------------------------------------------------------------");
 
-        int key2 = expInputKey(0, 2);
+        int key2 = expInputKey(0, 1);
         cleanConsole();
+
         switch (key2) {
             case 0 -> {
                 ConverterToJSON.toJSON(shop.getAllProducts());
                 System.out.println(">>>Информация записана в json файл!");
             }
-            case 1 -> {
-                shop.writeProductToFile(FILE_NAME_IO);
-                System.out.println(">>>Информация записана в файл!");
-            }
-            case 2 -> outputProducts();
+            case 1 -> outputProducts();
         }
     }
 
