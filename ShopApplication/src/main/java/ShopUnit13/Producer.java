@@ -1,10 +1,9 @@
 package ShopUnit13;
-import java.io.IOException;
 
 public class Producer implements Runnable{
     Shop shop;
 
-    public Producer(Shop shop) throws IOException {
+    public Producer(Shop shop) {
         this.shop = shop;
     }
 
