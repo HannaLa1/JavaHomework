@@ -1,8 +1,7 @@
 package web.servlet;
 
-import entity.Operation;
 import repository.DBConnection;
-import repository.OperationDAO;
+import service.CalcService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +12,13 @@ import java.io.IOException;
 
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
-    private final OperationDAO dao = new OperationDAO();
+    private final CalcService storage = new CalcService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DBConnection data = (DBConnection) getServletContext().getAttribute("DBConnection");
-        int operationId = (int) req.getSession().getAttribute("operationId");
+        int id = (int) req.getSession().getAttribute("operationId");
 
-        dao.deleteData(operationId, data);
+        storage.deleteData(id, (DBConnection) req.getSession().getAttribute("DBConnection"));
         resp.sendRedirect("/calc");
     }
 }

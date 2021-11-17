@@ -1,16 +1,15 @@
 package web.servlet;
 
-import entity.Operation;
 import entity.User;
 import repository.DBConnection;
-import repository.OperationDAO;
 import service.AuthorizationService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -30,14 +29,18 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter(PASSWORD_PARAM);
         String submitType = req.getParameter(SUBMIT);
 
-        DBConnection data = (DBConnection) getServletContext().getAttribute("DBConnection");
-        User user = storage.getData(log, password, data);
+        User user = storage.getData(log, password, (DBConnection) req.getSession().getAttribute("DBConnection"));
 
         if (submitType.equals("logIn") && user != null && user.getUserName() != null) {
             req.getSession().setAttribute("user", user);
-            req.getSession().setAttribute("userId", user.getUserId());
+            req.getSession().setAttribute("userId", user.getId());
             req.getSession().setAttribute("message", user.getUserName());
-            resp.sendRedirect("/calc");
+
+            if(user.getRole().equals("ADMIN")){
+                resp.sendRedirect("/admin");
+            }else if(user.getRole().equals("USER")){
+                resp.sendRedirect("/calc");
+            }
             return;
         } else if (submitType.equals("registration")) {
             getServletContext().getRequestDispatcher("/pages/registration.jsp").forward(req, resp);

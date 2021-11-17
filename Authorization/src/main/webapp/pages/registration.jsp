@@ -13,7 +13,10 @@
 </head>
 <body>
 <h1 align="center">Authorization Page:</h1>
-<h2 align="center" style="color: deeppink">${requestScope.message}!</h2>
+<h2 align="center" style="color: deeppink">${requestScope.message}</h2>
+<h2 align="center" style="color: deeppink">${requestScope.mess}</h2>
+
+<a href="<c:url value="/"/>">BACK</a><br>
 
 <form action="<c:url value="/registration"/>" method="post">
     <table style="background-color: pink; margin-left: 500px; margin-top: 50px">
@@ -31,17 +34,17 @@
 
         <tr>
             <td>Password: </td>
-            <td><input type="password" name="password1"></td>
+            <td><input type="password" name="password1" required></td>
         </tr>
 
         <tr>
             <td>Type password again: </td>
-            <td><input type="password" name="password2"></td>
+            <td><input type="password" name="password2" required></td>
         </tr>
 
         <tr>
             <td>UserName: </td>
-            <td><input type="text" name="userName"></td>
+            <td><input type="text" name="userName" required></td>
         </tr>
 
         <tr>

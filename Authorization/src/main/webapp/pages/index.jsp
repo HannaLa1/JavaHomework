@@ -12,21 +12,26 @@
     <title>Home Page</title>
 </head>
 <body>
-<h1 style="color: deeppink">Home Page</h1>
 
 <c:if test="${sessionScope.user!=null}">
+    <h1 style="color: deeppink">Personal account page</h1>
+
     <br/>
     <a href="<c:url value="/calc"/>">Calculator</a>
     <br/>
     <br/>
+    <a href="<c:url value="/logout"/>">Logout</a>
 </c:if>
 
-<a href="<c:url value="/login"/>">LogIn</a>
-<br/>
-<br/>
-<a href="<c:url value="/registration"/>">Registration</a><br>
-<br/>
-<br/>
-<a href="<c:url value="/logout"/>">Logout</a>
+<c:if test="${sessionScope.user==null}">
+    <h1 style="color: deeppink">Home Page</h1>
+
+    <br/>
+    <a href="<c:url value="/login"/>">LogIn</a>
+    <br/>
+    <br/>
+    <a href="<c:url value="/registration"/>">Registration</a><br>
+</c:if>
+
 </body>
 </html>

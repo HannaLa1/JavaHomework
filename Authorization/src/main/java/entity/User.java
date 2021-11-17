@@ -1,17 +1,18 @@
 package entity;
 
 public class User {
-    private int userId;
+    private int id;
     private String login;
     private String userName;
     private String password;
+    private String role;
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getId() {
+        return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -36,5 +37,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public enum Role{
+        USER,
+        ADMIN
     }
 }

@@ -2,7 +2,7 @@ package entity;
 
 public class Operation {
     private int id;
-    private int operationId;
+    private int userId;
     private double num1;
     private double num2;
     private double result;
@@ -11,20 +11,12 @@ public class Operation {
     public Operation(){
     }
 
-    public Operation(int id, double num1, double num2, double result, String typeOfOperation) {
-        this.id = id;
+    public Operation(int userId, double num1, double num2, double result, String typeOfOperation) {
+        this.userId = userId;
         this.num1 = num1;
         this.num2 = num2;
         this.result = result;
         this.typeOfOperation = typeOfOperation;
-    }
-
-    public int getOperationId() {
-        return operationId;
-    }
-
-    public void setOperationId(int operationId) {
-        this.operationId = operationId;
     }
 
     public int getId() {
@@ -33,6 +25,14 @@ public class Operation {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public double getNum1() {

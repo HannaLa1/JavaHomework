@@ -10,13 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperationDAO {
-    public void insertData(Operation operation, DBConnection data) {
-        String INSERT_DATA = "INSERT INTO operation(userId, num1, operation, num2, result) VALUES(?, ?, ?, ?, ?)";
+    private final static String INSERT_DATA = "INSERT INTO operation(userId, num1, operation, num2, result) VALUES(?, ?, ?, ?, ?)";
+    private final static String SELECT_DATA = "SELECT * FROM operation WHERE userId=?";
+    private final static String DELETE_DATA = "DELETE FROM operation WHERE operationId = ?";
+    private final static String DELETE_BY_USER_ID = "DELETE FROM operation WHERE userId = ?";
 
+    public void insertData(Operation operation, DBConnection data) {
         try {
             Connection connection = data.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_DATA);
-            preparedStatement.setInt(1, operation.getId());
+            preparedStatement.setInt(1, operation.getUserId());
             preparedStatement.setDouble(2, operation.getNum1());
             preparedStatement.setString(3, operation.getTypeOfOperation());
             preparedStatement.setDouble(4, operation.getNum2());
@@ -31,7 +34,6 @@ public class OperationDAO {
 
     public List<Operation> getData(int userId, DBConnection data) {
         List<Operation> operationList = new ArrayList<>();
-        String SELECT_DATA = "SELECT * FROM operation WHERE userId=?";
 
         try {
             Connection connection = data.getConnection();
@@ -40,18 +42,7 @@ public class OperationDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
-                Operation operation = new Operation();
-
-                operation.setOperationId(resultSet.getInt("operationId"));
-                operation.setId(resultSet.getInt("userId"));
-                operation.setNum1(resultSet.getDouble("num1"));
-                operation.setTypeOfOperation(resultSet.getString("operation"));
-                operation.setNum2(resultSet.getDouble("num2"));
-                operation.setResult(resultSet.getDouble("result"));
-
-                operationList.add(operation);
-            }
+            initializeFieldsOfOperation(resultSet, operationList);
 
             resultSet.close();
             preparedStatement.close();
@@ -62,18 +53,44 @@ public class OperationDAO {
         return operationList;
     }
 
-    public void deleteData(int operationId, DBConnection data) {
-        String DELETE_DATA = "DELETE FROM operation WHERE operationId = ?";
-
+    public void deleteData(int id, DBConnection data) {
         try {
             Connection connection = data.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_DATA);
-            preparedStatement.setInt(1, operationId);
+            preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteByUserId(int id, DBConnection data) {
+        try {
+            Connection connection = data.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_USER_ID);
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeFieldsOfOperation(ResultSet resultSet,  List<Operation> operationList) throws SQLException {
+        while (resultSet.next()){
+            Operation operation = new Operation();
+
+            operation.setId(resultSet.getInt("operationId"));
+            operation.setUserId(resultSet.getInt("userId"));
+            operation.setNum1(resultSet.getDouble("num1"));
+            operation.setTypeOfOperation(resultSet.getString("operation"));
+            operation.setNum2(resultSet.getDouble("num2"));
+            operation.setResult(resultSet.getDouble("result"));
+
+            operationList.add(operation);
         }
     }
 }
