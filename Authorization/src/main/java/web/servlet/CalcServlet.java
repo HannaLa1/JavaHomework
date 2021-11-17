@@ -2,7 +2,6 @@ package web.servlet;
 
 import entity.Operation;
 import repository.DBConnection;
-import repository.OperationDAO;
 import service.CalcService;
 
 import javax.servlet.ServletException;
@@ -18,17 +17,16 @@ public class CalcServlet extends HttpServlet {
     private static final String NUM1 = "num1";
     private static final String NUM2 = "num2";
     private static final String OPERATION = "submit";
-    private final OperationDAO dao = new OperationDAO();
+    private final CalcService storage = new CalcService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DBConnection data = (DBConnection) getServletContext().getAttribute("DBConnection");
         int id = (int) req.getSession().getAttribute("userId");
-        List<Operation> operationList = dao.getData(id, data);
+        List<Operation> operationList = storage.getData(id, (DBConnection) req.getSession().getAttribute("DBConnection"));
         req.getSession().setAttribute("operationList", operationList);
 
         for (Operation op : operationList) {
-            req.getSession().setAttribute("operationId", op.getOperationId());
+            req.getSession().setAttribute("operationId", op.getId());
         }
 
         getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);
@@ -36,17 +34,16 @@ public class CalcServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        DBConnection data = (DBConnection) getServletContext().getAttribute("DBConnection");
         double num1 = Double.parseDouble(req.getParameter(NUM1));
         double num2 = Double.parseDouble(req.getParameter(NUM2));
         String operation = req.getParameter(OPERATION);
         int id = (int) req.getSession().getAttribute("userId");
 
-        double result = new CalcService().doOperation(num1, num2, operation);
+        double result = storage.doOperation(num1, num2, operation);
         req.setAttribute("result", result);
-        dao.insertData(new Operation(id, num1, num2, result, operation), data);
+        storage.insertData(new Operation(id, num1, num2, result, operation), (DBConnection) req.getSession().getAttribute("DBConnection"));
 
-        List<Operation> operationList = dao.getData(id, data);
+        List<Operation> operationList = storage.getData(id, (DBConnection) req.getSession().getAttribute("DBConnection"));
         req.getSession().setAttribute("operationList", operationList);
 
         getServletContext().getRequestDispatcher("/pages/calc.jsp").forward(req, resp);

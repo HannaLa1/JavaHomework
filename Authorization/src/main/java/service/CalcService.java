@@ -1,6 +1,14 @@
 package service;
 
+import entity.Operation;
+import repository.DBConnection;
+import repository.OperationDAO;
+
+import java.util.List;
+
 public class CalcService {
+    private final OperationDAO operationDAO = new OperationDAO();
+
     private double sum(double num1, double num2) {
         return num1 + num2;
     }
@@ -32,5 +40,21 @@ public class CalcService {
         }
 
         return result;
+    }
+
+    public void insertData(Operation operation, DBConnection data) {
+        operationDAO.insertData(operation, data);
+    }
+
+    public List<Operation> getData(int userId, DBConnection data) {
+        return operationDAO.getData(userId, data);
+    }
+
+    public void deleteData(int id, DBConnection data){
+        operationDAO.deleteData(id, data);
+    }
+
+    public void deleteByUserId(int id, DBConnection data) {
+        operationDAO.deleteByUserId(id, data);
     }
 }

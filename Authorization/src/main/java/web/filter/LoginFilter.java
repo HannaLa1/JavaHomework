@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(servletNames = {"LoginFilter"},urlPatterns = {"/calc"})
+@WebFilter(servletNames = {"LoginFilter"},urlPatterns = {"/calc", "/delete", "/logout", "/update",
+        "/admin", "/deleteUser", "/history"})
 public class LoginFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
